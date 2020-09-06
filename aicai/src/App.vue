@@ -1,32 +1,78 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <transition :name="transitionName">
+      <router-view></router-view>
+    </transition>
+    <navBar></navBar>
   </div>
 </template>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import navBar from '@/components/navBar'
+import { mapGetters } from 'vuex'
+export default {
+  name: 'app',
+  data () {
+    return {
+      transitionName: ''
     }
+  },
+  provide () { // 在祖先组件中通过 provide 提供变量
+    return {
+      reload: this.reload //  声明一个变量
+    }
+  },
+  methods: {
+    // ...mapGetters(['config']),
+    reload () {
+      // 通过 this.isRouterAlive 控制 router-view 达到刷新效果
+      this.isRouterAlive = false
+      this.$nextTick(function () {
+        this.isRouterAlive = true
+      })
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      const toDepth = to.path.split('/').length
+      const fromDepth = from.path.split('/').length
+      this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+    },
+    config (val, vl) {
+      document.title = val.data.web_site_title || '人人爱彩'
+    }
+  },
+  computed: {
+    ...mapGetters(['config'])
+  },
+  components: {
+    navBar
   }
+}
+</script>
+<style scoped lang="scss">
+
+#app{
+  height: 100%;
+  @include max_width
+}
+.slide-right-enter-active,
+ .slide-right-leave-active,
+ .slide-left-enter-active,
+ .slide-left-leave-active {
+   will-change: transform;
+   transition: all 250ms;
+   position: absolute;
+ }
+.slide-right-enter {
+  opacity: 0;
+}
+.slide-right-leave-active {
+  opacity: 0;
+}
+.slide-left-enter {
+  opacity: 0;
+}
+.slide-left-leave-active {
+  opacity: 0;
 }
 </style>
