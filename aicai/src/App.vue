@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <transition :name="transitionName">
+<!--    <transition :name="transitionName">-->
       <router-view></router-view>
-    </transition>
-    <navBar></navBar>
+<!--    </transition>-->
+    <navBar v-if="$show"></navBar>
   </div>
 </template>
 <script>
@@ -22,7 +22,6 @@ export default {
     }
   },
   methods: {
-    // ...mapGetters(['config']),
     reload () {
       // 通过 this.isRouterAlive 控制 router-view 达到刷新效果
       this.isRouterAlive = false
@@ -41,6 +40,8 @@ export default {
       document.title = val.data.web_site_title || '人人爱彩'
     }
   },
+  created () {
+  },
   computed: {
     ...mapGetters(['config'])
   },
@@ -50,6 +51,18 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+body,html{
+  height: 100%;
+  overflow: hidden;
+}
+* {
+  padding: 0;
+  margin: 0;
+  font-style: normal;
+  text-decoration: none;
+  list-style: none;
+  font-weight: 400;
+}
 
 #app{
   height: 100%;

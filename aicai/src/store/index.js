@@ -22,7 +22,9 @@ export default new Vuex.Store({
         return {
           // 需要储存的state值
           indexApp: state.indexApp,
-          config: state.config
+          config: state.config,
+          ycfl: state.ycfl,
+          dstj: state.dstj
         }
       }
     })

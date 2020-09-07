@@ -7,11 +7,14 @@ import 'vant/lib/index.css'
 import loading from '@/components/loading'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.min.css'
+import topbar from '@/components/topbar'
 Vue.use(VueAwesomeSwiper)
+Vue.component('topBar', topbar)
 Vue.component('v-loading', loading)
 Vue.use(vant)
 Vue.use(Lazyload)
 router.beforeEach((to, from, next) => {
+  to.name === 'index' ? Vue.prototype.$show = true : Vue.prototype.$show = false
   const token = sessionStorage.getItem('accessToken')
   if (to.meta.isLogin) {
     if (token) {

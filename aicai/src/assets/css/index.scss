@@ -4,6 +4,14 @@ $bln: #15d4e8;
 @mixin bord {
   border-radius: 10px;
 }
+@mixin boxShadow{
+  box-shadow: 0PX 2PX 4PX #9d9d9d38;
+}
+p,h1,h2,h3,h4,h5{
+  margin: 0;
+  padding: 0;
+  word-break: break-all;
+}
 
 @mixin idx1 {
   @include bord;
@@ -55,15 +63,6 @@ input {
   border: none;
 }
 
-* {
-  padding: 0;
-  margin: 0;
-  font-style: normal;
-  text-decoration: none;
-  list-style: none;
-  font-weight: 400;
-}
-
 @mixin tp40 {
   font-size: 40px;
 }
@@ -108,11 +107,30 @@ input {
   }
 }
 
-$cl: #333333;
-$cl1: #444444;
-$cl2: #666666;
+$cl: #222222;
+$cl1: #333333;
+$cl2: #555555;
 $cl3: #888888;
 
+.list .table{
+  margin-top: 2%;
+  width: 80%;
+  margin: 0 auto;
+  background: #ffffff;
+  padding: 0 2%;
+  table{
+    width: 100%;
+    background: #ffffff;
+    tbody tr{
+      td{
+        text-align: left;
+        width: 100px !important;
+        border-bottom: 1PX solid $cl3;
+      }
+    }
+
+  }
+}
 @mixin max_width {
   width: 550PX;
   position: absolute;
@@ -169,6 +187,12 @@ $cl3: #888888;
 
 :export {
   fontColor: $red;
+  fontColor2:$cl;
+}
+.analy{
+  .van-tabs__line{
+    bottom: 23px;
+  }
 }
 .van-tabbar-item--active{
   color: #E7523A;
@@ -202,5 +226,12 @@ $cl3: #888888;
     }
   }
 }
-
+.van-tag--danger{
+  background: none;
+  color: #54B258;
+}
+.custom-title{
+  @include tp32;
+  padding-right: 4%;
+}
 

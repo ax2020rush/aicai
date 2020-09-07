@@ -10,6 +10,12 @@ const mutations = {
   },
   'INDEXAPP' (state, res) {
     state.indexApp = res
+  },
+  'YCFL' (state, res) {
+    state.ycfl = res
+  },
+  'DSTJ' (state, res) {
+    state.dstj = res
   }
 
 }

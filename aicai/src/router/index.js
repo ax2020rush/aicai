@@ -52,6 +52,30 @@ const routes = [
     meta: {
       isLogin: true
     }
+  },
+  {
+    path: '/ycfl',
+    name: 'ycfl',
+    component: () => import('@/views/index/ycfl/index'),
+    meta: {
+      isLogin: true
+    }
+  },
+  {
+    path: '/dsfl',
+    name: 'dsfl',
+    component: () => import('@/views/index/dsfl/index'),
+    meta: {
+      isLogin: true
+    }
+  },
+  {
+    path: '/dsxq',
+    name: 'dsxq',
+    component: () => import('@/views/index/dsfl/dsdetile/index'),
+    meta: {
+      isLogin: true
+    }
   }
 ]
 

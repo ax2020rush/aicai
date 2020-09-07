@@ -1,7 +1,8 @@
 import Md5 from 'md5'
 import axios from 'axios'
 import store from '@/store/index'
-import { Toast } from 'vant'
+import { Toast, Notify } from 'vant'
+import Router from '@/router/index'
 const qs = require('qs')
 // const object = {}
 export const Md5Keys = (key) => {
@@ -37,8 +38,13 @@ const instance = axios.create({
 })
 // 添加响应拦截器
 instance.interceptors.response.use((response) => {
-  if (response.status === 200) {
-    // 请求成功
+  if (response.data.code === 401) {
+    Notify({ type: 'warning', message: '登录已过期，请重新登录' })
+    setTimeout(() => {
+      sessionStorage.clear()
+      Router.push({ path: '/login' })
+    }, 500)
+    // 数据请求成功后
   }
   return response.data
 }, (error) => {
@@ -48,7 +54,12 @@ instance.interceptors.response.use((response) => {
 })
 // 添加响应拦截器
 instance.interceptors.response.use((response) => {
-  if (response.status === 200) {
+  if (response.data.code === 401) {
+    Notify({ type: 'warning', message: '登录已过期，请重新登录' })
+    setTimeout(() => {
+      sessionStorage.clear()
+      Router.push({ path: '/login' })
+    }, 500)
     // 数据请求成功后
   }
   return response
@@ -72,7 +83,9 @@ export const api = {
       res = await instance.get(url + Md5Keys(data))
     }
     if (res.code === 200) {
-      store.state.loading[str] = false
+      if (str) {
+        store.state.loading[str] = false
+      }
     }
     return res
   },

@@ -18,11 +18,27 @@ const getSms = (obj) => {
 const login = (obj) => {
   return api.post('api/v1/site/login', obj)
 }// 用户登录
+const getList = (obj) => {
+  return api.get('api/v1/common/article-details', obj, true)
+}// 首页四大接口
+const czfl = (obj) => {
+  return api.get('api/v1/lottery/lottery', obj, true, 'czfl')
+}// 原厂分类
+const dsTj = (obj) => {
+  return api.get('api/v1/lottery/lottery/lottery-god-all', obj, true)
+}// 大神推荐
+const dscz = (obj) => {
+  return api.get('api/v1/lottery/lottery/lottery-god-article', obj, true)
+}// 大神分类
 export default {
   banner,
   indexApp,
   resgiter,
   config,
   getSms,
-  login
+  login,
+  getList,
+  czfl,
+  dsTj,
+  dscz
 }

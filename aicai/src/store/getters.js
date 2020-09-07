@@ -20,6 +20,20 @@ const getters = {
     } else {
       store.dispatch('getIdexApp')
     }
+  },
+  ycfl (state) {
+    if (state.ycfl) {
+      return state.ycfl.data
+    } else {
+      store.dispatch('getYcFl')
+    }
+  },
+  dstj (state) {
+    if (state.dstj) {
+      return state.dstj.data
+    } else {
+      store.dispatch('getDsyc')
+    }
   }
 }
 export default getters

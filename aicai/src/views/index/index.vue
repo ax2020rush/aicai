@@ -6,7 +6,7 @@
       <MarqueeTips v-if="config" :content="config.data.marquee_placard" :speed="20"></MarqueeTips>
     </div>
     <van-row class="indextype" type="flex" justify="center">
-      <van-col span="6" v-for="(item,k) in indexApp" @click="$router.push({path:'/analy'})" :key="k">
+      <van-col span="6" v-for="(item,k) in indexApp" @click="$router.push({path:'/analy',query:{pid:item.id}})" :key="k">
         <van-image
             width="48px"
             height="48px"
@@ -17,7 +17,7 @@
       </van-col>
     </van-row>
     <div class="content">
-      <div class="left">
+      <div class="left" @click="$router.push({path:'/ycfl'})">
         <h1>原创分析</h1>
         <van-image
             width="60%"
@@ -30,7 +30,7 @@
       <div class="right">
         <div class="top">
           <div>
-            <div class="_left">
+            <div class="_left" @click="$router.push({path:'/dsfl'})">
               <h1>大神推荐</h1>
               <a>点击进入</a>
             </div>
@@ -117,6 +117,7 @@ export default {
 
 <style scoped lang="scss">
 .index {
+  padding-bottom: 26%;
   .foot {
     width: 94%;
     min-height: 90px;
@@ -158,10 +159,9 @@ export default {
     background: $bg;
     justify-content: space-between;
     margin-top: 3%;
-
     .left {
       width: 36%;
-      min-height: 380px;
+      min-height: 450px;
       @include idx1;
       display: flex;
       flex-wrap: wrap;
@@ -169,12 +169,13 @@ export default {
       align-content: space-between;
 
       h1 {
+        width: 100%;
         margin-top: 5%;
         @include indexH1;
       }
 
       > a {
-        @include abtn
+        @include abtn;
         margin-bottom: 5%;
       }
     }
@@ -204,7 +205,7 @@ export default {
           align-items: center;
 
           ._left {
-            width: 60%;
+            width: 80%;
             height: 100%;
             display: flex;
             justify-content: left;
@@ -212,7 +213,9 @@ export default {
             flex-wrap: wrap;
 
             h1 {
-              @include indexH1
+              width: 100%;
+              @include indexH1;
+              text-align: left;
             }
 
             > a {
@@ -230,7 +233,7 @@ export default {
         height: 44%;
 
         > div {
-          @include bord
+          @include bord;
           width: 48%;
           height: 100%;
           background: deeppink;
@@ -249,6 +252,8 @@ export default {
           > div {
             margin-bottom: 3%;
             border-bottom: .5PX solid #ffffff;
+            position: relative;
+            top: -15px;
 
           }
 
