@@ -16,6 +16,9 @@ const mutations = {
   },
   'DSTJ' (state, res) {
     state.dstj = res
+  },
+  'CHART' (state, res) {
+    state.chart = res
   }
 
 }

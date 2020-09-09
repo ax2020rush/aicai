@@ -13,7 +13,12 @@ Vue.component('topBar', topbar)
 Vue.component('v-loading', loading)
 Vue.use(vant)
 Vue.use(Lazyload)
+// Vue.component('charList', () => import('@/views/index/chart/next/comopents/list' + to.query.type))
 router.beforeEach((to, from, next) => {
+  Vue.component('charList', () => {
+    return import('@/views/index/chart/next/comopents/list' + to.query.type)
+  })
+
   to.name === 'index' ? Vue.prototype.$show = true : Vue.prototype.$show = false
   const token = sessionStorage.getItem('accessToken')
   if (to.meta.isLogin) {

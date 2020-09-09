@@ -1,15 +1,16 @@
 <template>
-  <div>
-    <topBar title="原创分类"></topBar>
+  <div class="chart">
+    <topBar title="走势图分类"></topBar>
     <!-- 两端对齐 -->
     <div class="listFl" v-if="ycfl">
-      <div v-for="(item,k) in ycfl" :key="k" @click="$router.push({path:'/analy',query:{pid:item.id}})">
+      <div v-for="(item,k) in ycfl" :key="k"
+           @click="$router.push({path:'/chartNT',query:{code:item.lottery_code,name:item.name,type:item.trend_type}})">
         <van-image round width="50" height="50" :src="ishttp(item.logo)"/>
         <p>{{ item.name }}</p>
       </div>
       <div></div>
     </div>
-    <v-loading v-else></v-loading>
+    <v-loading v-else ></v-loading>
   </div>
 </template>
 
@@ -25,6 +26,9 @@ export default {
   },
   computed: {
     ...mapGetters(['ycfl'])
+  },
+  mounted () {
+
   }
 }
 </script>

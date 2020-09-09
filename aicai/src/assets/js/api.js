@@ -30,6 +30,9 @@ const dsTj = (obj) => {
 const dscz = (obj) => {
   return api.get('api/v1/lottery/lottery/lottery-god-article', obj, true)
 }// 大神分类
+const chart = (obj) => {
+  return api.get('api/v1/lottery/lottery/lottery-result', obj, true)
+}// 走势图
 export default {
   banner,
   indexApp,
@@ -40,5 +43,6 @@ export default {
   getList,
   czfl,
   dsTj,
-  dscz
+  dscz,
+  chart
 }

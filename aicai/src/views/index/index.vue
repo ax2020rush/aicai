@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="bottom">
-          <div>
+          <div @click="$router.push({path:'/chart'})">
             <h1>走势图</h1>
             <van-image
                 width="40%"

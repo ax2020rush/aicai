@@ -24,6 +24,15 @@ const actions = {
   async getDsyc ({ commit }) {
     const res = await api.dsTj()
     commit('DSTJ', res)
+  },
+  async getChart ({ state, commit }, obj) {
+    if (state.chart && state.chart.code === obj.lottery_code) {
+      commit('CHART', state.chart)
+    } else {
+      const res = await api.chart(obj)
+      res.code = obj.lottery_code
+      commit('CHART', res)
+    }
   }
 }
 export default actions

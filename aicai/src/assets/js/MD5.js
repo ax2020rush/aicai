@@ -54,7 +54,7 @@ instance.interceptors.response.use((response) => {
 })
 // 添加响应拦截器
 instance.interceptors.response.use((response) => {
-  if (response.data.code === 401) {
+  if (response.code === 401) {
     Notify({ type: 'warning', message: '登录已过期，请重新登录' })
     setTimeout(() => {
       sessionStorage.clear()

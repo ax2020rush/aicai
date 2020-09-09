@@ -76,6 +76,22 @@ const routes = [
     meta: {
       isLogin: true
     }
+  },
+  {
+    path: '/chart',
+    name: 'chart',
+    component: () => import('@/views/index/chart/index'),
+    meta: {
+      isLogin: true
+    }
+  },
+  {
+    path: '/chartNT',
+    name: 'chartNT',
+    component: () => import('@/views/index/chart/next/inex'),
+    meta: {
+      isLogin: true
+    }
   }
 ]
 

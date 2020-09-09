@@ -9,7 +9,7 @@
     <topBar title="大神详情"></topBar>
     <div class="cont">
       <div class="top">
-        <van-image round width="50" height="50" src="https://img.yzcdn.cn/vant/cat.jpeg"/>
+        <van-image round width="50" height="50" :src="newData.avatar"/>
         <div>
           <h1>{{ newData.nickname }}</h1>
           <p>擅长: <span>{{ newData.label }}</span></p>
