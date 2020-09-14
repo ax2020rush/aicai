@@ -1,6 +1,6 @@
 <template>
   <van-tabbar v-model="active">
-    <van-tabbar-item v-for="(item,key) in icon" :key="key">
+    <van-tabbar-item v-for="(item,key) in icon" :key="key" :to="item.path">
       <span>{{ item.title }}</span>
       <template #icon="props">
         <img :src="props.active ? item.active : item.inactive" />
@@ -27,26 +27,48 @@ export default {
         {
           title: '首页',
           active: sy2,
-          inactive: sy
+          inactive: sy,
+          path: '/',
+          id: 0
         },
         {
           title: '开奖',
           active: kj,
-          inactive: kj2
+          inactive: kj2,
+          path: '/open',
+          id: 1
         },
         {
           title: '聊天',
           active: lt,
           inactive: lt2
+
         },
         {
           title: '我的',
           active: wd,
-          inactive: wd2
+          inactive: wd2,
+          path: '/user',
+          id: 3
         }
       ]
     }
+  },
+
+  mounted () {
+  },
+  watch: {
+    '$route' (to, from) {
+      if (to.name === 'index') {
+        this.active = 0
+      } else if (to.name === 'open') {
+        this.active = 1
+      } else if (to.name === 'user') {
+        this.active = 3
+      }
+    }
   }
+
 }
 </script>
 

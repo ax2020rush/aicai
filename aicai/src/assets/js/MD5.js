@@ -4,7 +4,6 @@ import store from '@/store/index'
 import { Toast, Notify } from 'vant'
 import Router from '@/router/index'
 const qs = require('qs')
-// const object = {}
 export const Md5Keys = (key) => {
   const str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
   let newStr = ''// 生成8位随机字符串
@@ -89,7 +88,7 @@ export const api = {
     }
     return res
   },
-  async post (url, data, token) {
+  async post (url, data, token, formdata) {
     Toast.loading({
       message: '加载中...',
       forbidClick: true
@@ -100,7 +99,13 @@ export const api = {
           'access-token': sessionStorage.getItem('accessToken')
         }
       }
-      const res = await instance.post(url + Md5Keys(), qs.stringify(data), config)
+      let datas
+      if (formdata) {
+        datas = data
+      } else {
+        datas = qs.stringify(data)
+      }
+      const res = await instance.post(url + Md5Keys(), datas, config)
       if (res) {
         setTimeout(() => {
           Toast.clear()

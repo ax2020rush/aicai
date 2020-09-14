@@ -1,6 +1,6 @@
 import store from './index'
 const getters = {
-  bannerData (state) {
+  bannerData: (state) => {
     if (state.banner) {
       return state.banner
     } else {
@@ -34,6 +34,14 @@ const getters = {
     } else {
       store.dispatch('getDsyc')
     }
+  },
+  userAgent (state) {
+    if (state.userAgent) {
+      return state.userAgent.data
+    } else {
+      store.dispatch('getuser')
+    }
   }
 }
+
 export default getters

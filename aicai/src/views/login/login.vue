@@ -60,6 +60,7 @@ export default {
         drive: '1'
       })
       if (res.code === 200) {
+        sessionStorage.setItem('userinfos', JSON.stringify(res.data))
         sessionStorage.setItem('accessToken', res.data.member.access_token)
         sessionStorage.setItem('refresh_token', res.data.member.refresh_token)
         this.$router.push({ path: '/' })

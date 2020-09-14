@@ -11,6 +11,12 @@
         <td>合单双</td>
         <td>大小</td>
         <td>和大小</td>
+        <td>头数</td>
+        <td>尾数</td>
+        <td>家禽野兽</td>
+        <td>总和</td>
+        <td>总大小</td>
+        <td>总单双</td>
       </tr>
       <tr v-for="(item,k) in list" :key="k">
         <td>{{ item.expect.slice(item.expect.length - 3) }}期</td>
@@ -22,7 +28,12 @@
         <td v-html="orArr(item.opencode.split(',').slice(item.opencode.split(',').length-1)[0].split('').reduce((a,b)=>parseInt(a)+parseInt(b)))"></td>
         <td v-html="contrast(item.opencode.split(',').slice(item.opencode.split(',').length-1))"></td>
         <td v-html="hsContrast(item.opencode.split(',').slice(item.opencode.split(',').length-1)[0])"></td>
-        <td>头数</td>
+        <td>{{touwei(item.opencode.split(',').slice(item.opencode.split(',').length-1)[0])}}</td>
+        <td>{{weiNum(item.opencode.split(',').slice(item.opencode.split(',').length-1)[0])}}</td>
+        <td>{{beast(sxSort(item.opencode.split(',').slice(item.opencode.split(',').length-1)[0]))}}</td>
+        <td>{{addArr(item.opencode.split(','))}}</td>
+        <td v-html="contrast2(addArr(item.opencode.split(',')))">总大小</td>
+        <td v-html="orArr2(addArr(item.opencode.split(',')))"></td>
       </tr>
     </table>
   </div>
@@ -30,7 +41,7 @@
 </template>
 
 <script>
-import { isColor, sxSort, wuxing } from '@/assets/js/fun'
+import { isColor, beast, sxSort, wuxing, touwei, weiNum } from '@/assets/js/fun'
 import scss from '@/assets/css/index.scss'
 import { mapState } from 'vuex'
 
@@ -42,6 +53,9 @@ export default {
       isColor,
       sxSort,
       wuxing,
+      touwei,
+      beast,
+      weiNum,
       style: `display: flex;
         width: 24px;
         height: 24px;
@@ -78,6 +92,14 @@ export default {
         return '<span style="color:' + this.scss.fontColor + '">和</span>'
       }
     },
+    contrast2 (s) {
+      const str = parseInt(s)
+      if (str <= 174) {
+        return '<span style="color:' + this.scss.fontColor2 + '">总小</span>'
+      } else if (str > 175) {
+        return '<span style="color:' + this.scss.fontColor + '">总大</span>'
+      }
+    },
     addArr (arr) {
       return arr.reduce((a, b) => {
         return parseInt(a) + parseInt(b)
@@ -85,6 +107,9 @@ export default {
     },
     orArr (str) {
       return str % 2 === 0 ? '<span style="color:' + this.scss.fontColor2 + '">双</span>' : '<span style="color:' + this.scss.fontColor + '">单</span>'
+    },
+    orArr2 (str) {
+      return str % 2 === 0 ? '<span style="color:' + this.scss.fontColor2 + '">总双</span>' : '<span style="color:' + this.scss.fontColor + '">总单</span>'
     },
     sxpan (arr) {
       let n = 0

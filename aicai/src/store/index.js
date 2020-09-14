@@ -24,7 +24,8 @@ export default new Vuex.Store({
           indexApp: state.indexApp,
           config: state.config,
           ycfl: state.ycfl,
-          dstj: state.dstj
+          dstj: state.dstj,
+          banner: state.banner
         }
       }
     })

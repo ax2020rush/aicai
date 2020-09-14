@@ -29,10 +29,19 @@ const actions = {
     if (state.chart && state.chart.code === obj.lottery_code) {
       commit('CHART', state.chart)
     } else {
+      commit('CHART', null)
       const res = await api.chart(obj)
       res.code = obj.lottery_code
       commit('CHART', res)
     }
+  },
+  async getCl ({ commit }, obj) {
+    const res = await api.clph()
+    commit('CLPH', res)
+  },
+  async getuser ({ state, commit }) {
+    const res = await api.getUser()
+    commit('USERAGENT', res)
   }
 }
 export default actions

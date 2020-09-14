@@ -19,6 +19,12 @@ const mutations = {
   },
   'CHART' (state, res) {
     state.chart = res
+  },
+  'CLPH' (state, res) {
+    state.clph = res
+  },
+  'USERAGENT' (state, res) {
+    state.userAgent = res
   }
 
 }

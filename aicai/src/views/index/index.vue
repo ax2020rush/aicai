@@ -5,6 +5,29 @@
       <div><span>{{ new Date().getDate() }}</span><span>{{ new Date().getMonth() + 1 }}月</span></div>
       <MarqueeTips v-if="config" :content="config.data.marquee_placard" :speed="20"></MarqueeTips>
     </div>
+    <van-popup v-model="show">
+      <van-cell-group v-if="$store.state.clph">
+        <van-cell v-for="(item,k) in $store.state.clph.data" :key="k">
+          <div class="contents">
+            <van-image width="50"
+                       height="50"
+                       round
+                       :src="ishttp(item.logo)" />
+            <div>
+              <h2>{{item.name}}</h2>
+              <div>
+<!--                ['#F44336','#7C4DFF','#2196F3']-->
+
+                <span class="col">总和</span>
+                <span :class="'col'+(k===0||k===1||k>5?3:k)">和{{isds(item.type)}}</span>
+                <span>连{{item.count}}期</span>
+              </div>
+            </div>
+          </div>
+        </van-cell>
+      </van-cell-group>
+      <v-loading v-else></v-loading>
+    </van-popup>
     <van-row class="indextype" type="flex" justify="center">
       <van-col span="6" v-for="(item,k) in indexApp" @click="$router.push({path:'/analy',query:{pid:item.id}})" :key="k">
         <van-image
@@ -50,7 +73,7 @@
                 :src="zs"
             />
           </div>
-          <div>
+          <div @click="showcl">
             <h1>长龙提醒</h1>
             <van-image
                 width="22%"
@@ -62,8 +85,8 @@
         </div>
       </div>
     </div>
-    <div class="foot">
-      <div class="b_left">
+    <div class="foot" @click="$router.push({path:'/sy'})">
+      <div class="b_left" >
         <van-image
             width="30px"
             height="30px"
@@ -82,7 +105,7 @@
 import { ishttp } from '@/assets/js/fun'
 import banner from '@/components/index/banner'
 import MarqueeTips from 'vue-marquee-tips'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import yc from '@/assets/img/yc.png'
 import tj from '@/assets/img/tj.png'
 import zs from '@/assets/img/zs.png'
@@ -98,7 +121,8 @@ export default {
       zs,
       cl,
       ph,
-      ishttp
+      ishttp,
+      show: false
     }
   },
   computed: {
@@ -109,6 +133,22 @@ export default {
     MarqueeTips
   },
   methods: {
+    ...mapActions(['getCl']),
+    showcl () {
+      this.show = true
+      this.getCl()
+    },
+    isds (n) {
+      if (n === 1) {
+        return '大'
+      } else if (n === 2) {
+        return '小'
+      } else if (n === 3) {
+        return '单'
+      } else if (n === 4) {
+        return '双'
+      }
+    }
   },
   mounted () {
   }
@@ -117,6 +157,49 @@ export default {
 
 <style scoped lang="scss">
 .index {
+  .van-popup--center{
+    height: auto;
+    width:60%;
+    border-radius: 4px;
+  }
+  .contents{
+    width: 100%;
+    background: #ffffff;
+    display: flex;
+    >div{
+      h2{
+        @include tp32;
+        font-weight: 400;
+        text-align: center;
+      }
+      >div{
+        text-align: center;
+        >span{
+          @include tp30;
+          margin: 0px 6px;
+          padding: 4px 6px;
+        }
+        >span.col{
+          background: #757575;
+        }
+        .col2{
+          background: #F44336;
+        }
+       .col3{
+          background: #7C4DFF;
+        }
+        .col4{
+          background: #2196F3;
+        }
+      }
+      &:last-child{
+        position: absolute;
+        left: 100px;
+        right: 0;
+        margin: auto;
+      }
+    }
+  }
   padding-bottom: 26%;
   .foot {
     width: 94%;

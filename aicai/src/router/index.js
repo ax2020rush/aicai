@@ -92,6 +92,46 @@ const routes = [
     meta: {
       isLogin: true
     }
+  },
+  {
+    path: '/sy',
+    name: 'sy',
+    component: () => import('@/views/index/shouyi/index'),
+    meta: {
+      isLogin: true
+    }
+  },
+  {
+    path: '/open',
+    name: 'open',
+    component: () => import('@/views/open/index'),
+    meta: {
+      isLogin: true
+    }
+  },
+  {
+    path: '/openNY',
+    name: 'openNY',
+    component: () => import('@/views/open/next/index'),
+    meta: {
+      isLogin: true
+    }
+  },
+  {
+    path: '/user',
+    name: 'user',
+    component: () => import('@/views/user/index'),
+    meta: {
+      isLogin: true
+    }
+  },
+  {
+    path: '/userio',
+    name: 'userio',
+    component: () => import('@/views/user/userio/index'),
+    meta: {
+      isLogin: true
+    }
   }
 ]
 

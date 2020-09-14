@@ -5,6 +5,29 @@ $ballBlue:#2196F3;
 @mixin bord {
   border-radius: 10px;
 }
+em,i{
+  font-style: normal;
+}
+.open  .van-tabs__content{
+  height: 100%;
+  border-top: 10px solid $bg;
+  .van-tab__pane{
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+}
+.van-tabs__wrap{
+  background: #ffffff;
+}
+.open .van-tabs__nav{
+  width: 50%;
+  margin: 0 auto;
+}
+.open .van-tabs__line{
+  //position: relative;
+  bottom: 22px;
+}
 @mixin boxShadow{
   box-shadow: 0PX 2PX 4PX #9d9d9d38;
 }

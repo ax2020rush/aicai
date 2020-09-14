@@ -22,6 +22,7 @@ export default {
     }
   },
   methods: {
+
     reload () {
       // 通过 this.isRouterAlive 控制 router-view 达到刷新效果
       this.isRouterAlive = false

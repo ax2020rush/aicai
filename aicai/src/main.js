@@ -18,8 +18,10 @@ router.beforeEach((to, from, next) => {
   Vue.component('charList', () => {
     return import('@/views/index/chart/next/comopents/list' + to.query.type)
   })
-
-  to.name === 'index' ? Vue.prototype.$show = true : Vue.prototype.$show = false
+  Vue.component('openList', () => {
+    return import('@/views/open/next/components/list' + to.query.type + '/index')
+  })
+  to.name === 'index' || to.name === 'open' || to.name === 'user' ? Vue.prototype.$show = true : Vue.prototype.$show = false
   const token = sessionStorage.getItem('accessToken')
   if (to.meta.isLogin) {
     if (token) {

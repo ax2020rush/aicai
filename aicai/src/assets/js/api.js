@@ -33,6 +33,27 @@ const dscz = (obj) => {
 const chart = (obj) => {
   return api.get('api/v1/lottery/lottery/lottery-result', obj, true)
 }// 走势图
+const clph = (obj) => {
+  return api.get('api/v1/lottery/lottery/long-notice', obj, true)
+}// 长龙
+const syph = (obj) => {
+  return api.get('api/v1/member/account/money-rank', false, true)
+}// 收益排行
+const jihua = (obj) => {
+  return api.get('api/v1/lottery/lottery/plan-and-history', obj, true)
+}// 计划获取
+const getUser = (obj) => {
+  return api.get('api/v1/member/member', false, true)
+}// 个人中心
+const sign = () => {
+  return api.post('api/v1/member/sign', false, true)
+}// 登录
+const realname = (obj) => {
+  return api.post('api/v1/member/member/update-member', obj, true)
+}// 修改资料
+const upImg = (obj, data) => {
+  return api.post('api/v1/file/images', obj, true, data)
+}
 export default {
   banner,
   indexApp,
@@ -44,5 +65,12 @@ export default {
   czfl,
   dsTj,
   dscz,
-  chart
+  chart,
+  clph,
+  syph,
+  jihua,
+  getUser,
+  sign,
+  realname,
+  upImg
 }
