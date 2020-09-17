@@ -1,37 +1,76 @@
 $bg: #F9F9F9;
 $red: #EA4A32;
 $bln: #15d4e8;
-$ballBlue:#2196F3;
+$ballBlue: #2196F3;
 @mixin bord {
   border-radius: 10px;
 }
-em,i{
+
+@mixin tjbtn {
+  width: 90%;
+  height: 100px;
+  border-radius: 100px;
+  background: $ballBlue;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2PX 4PX #00000036;
+  @include tp36;
+  margin: 0 auto;
+  margin-top: 4%;
+}
+
+@mixin jbtn {
+  background: linear-gradient(to right, #ED7053, #ED7053);
+  color: #ffffff;
+  width: 40%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  border-radius: 60px;
+  box-shadow: 0PX 2PX 3PX #b20d0d4a;
+
+}
+
+//渐变btn
+
+em, i {
   font-style: normal;
 }
-.open  .van-tabs__content{
+
+.open .van-tabs__content {
   height: 100%;
   border-top: 10px solid $bg;
-  .van-tab__pane{
+
+  .van-tab__pane {
     height: 100%;
     overflow: hidden;
     overflow-y: auto;
   }
 }
-.van-tabs__wrap{
+
+.van-tabs__wrap {
   background: #ffffff;
 }
-.open .van-tabs__nav{
+
+.open .van-tabs__nav {
   width: 50%;
   margin: 0 auto;
 }
-.open .van-tabs__line{
+
+.open .van-tabs__line {
   //position: relative;
   bottom: 22px;
 }
-@mixin boxShadow{
+
+@mixin boxShadow {
   box-shadow: 0PX 2PX 4PX #9d9d9d38;
 }
-p,h1,h2,h3,h4,h5{
+
+p, h1, h2, h3, h4, h5 {
   margin: 0;
   padding: 0;
   word-break: break-all;
@@ -135,23 +174,26 @@ $cl: #222222;
 $cl1: #333333;
 $cl2: #555555;
 $cl3: #888888;
-@mixin loading{
+@mixin loading {
   position: absolute;
   width: 100%;
   height: 100%;
   top: 110px;
 }
-.list .table{
+
+.list .table {
   width: 80%;
   margin-top: 2%;
   margin: 0 auto;
   background: #ffffff;
   padding: 0 2%;
-  table{
+
+  table {
     width: 100%;
     background: #ffffff;
-    tbody tr{
-      td{
+
+    tbody tr {
+      td {
         text-align: left;
         width: 100px !important;
         border-bottom: 1PX solid $cl3;
@@ -160,6 +202,7 @@ $cl3: #888888;
 
   }
 }
+
 @mixin max_width {
   width: 550PX;
   position: absolute;
@@ -216,21 +259,25 @@ $cl3: #888888;
 
 :export {
   fontColor: $red;
-  fontColor2:$cl;
-  blue:$ballBlue;
+  fontColor2: $cl;
+  blue: $ballBlue;
 
 }
-.analy{
-  .van-tabs__line{
+
+.analy {
+  .van-tabs__line {
     bottom: 23px;
   }
 }
-.van-tabbar-item--active{
+
+.van-tabbar-item--active {
   color: #E7523A;
 }
-.van-tabbar-item--active{
+
+.van-tabbar-item--active {
   position: relative;
-  &:after{
+
+  &:after {
     content: '';
     width: 60px;
     height: 60px;
@@ -244,25 +291,33 @@ $cl3: #888888;
     margin: auto;
     z-index: -1;
     opacity: 0;
-    animation:move .5s;
+    animation: move .5s;
   }
+
   @keyframes move {
-    from{
+    from {
       transform: scale(0);
       opacity: 1;
     }
-    to{
+    to {
       transform: scale(1);
       opacity: 0;
     }
   }
 }
-.van-tag--danger{
+
+.van-tag--danger {
   background: none;
   color: #54B258;
 }
-.custom-title{
+
+.custom-title {
   @include tp32;
   padding-right: 4%;
 }
-
+.moji div{
+  display: none !important;
+}
+.help{
+  @include tp32;
+}

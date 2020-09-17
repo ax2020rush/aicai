@@ -48,7 +48,9 @@ instance.interceptors.response.use((response) => {
   return response.data
 }, (error) => {
   // 请求失败
-  console.log(process.env.VUE_APP_API_ROOT + '地址错误')
+  Toast.fail('网络连接失败，请刷新')
+
+  // console.log(process.env.VUE_APP_API_ROOT + '地址错误')
   return Promise.reject(error)
 })
 // 添加响应拦截器
@@ -64,7 +66,8 @@ instance.interceptors.response.use((response) => {
   return response
 }, (error) => {
   // 对响应错误做点什么
-  console.log(process.env.VUE_APP_API_ROOT + '地址错误')
+  Toast.fail('网络连接失败，请刷新')
+  // console.log(process.env.VUE_APP_API_ROOT + '地址错误')
   return Promise.reject(error)
 })
 export const api = {

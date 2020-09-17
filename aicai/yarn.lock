@@ -8926,6 +8926,14 @@ uuid@^3.3.2, uuid@^3.4.0:
   resolved "https://registry.npm.taobao.org/uuid/download/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha1-sj5DWK+oogL+ehAK8fX4g/AgB+4=
 
+v-emoji-picker@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.npm.taobao.org/v-emoji-picker/download/v-emoji-picker-2.2.0.tgz#b55d8e0a12318a7bd4f8471df38a51905fe66eea"
+  integrity sha1-tV2OChIxinvU+Ecd84pRkF/mbuo=
+  dependencies:
+    vue-class-component "^7.2.3"
+    vue-property-decorator "^8.4.2"
+
 v8-compile-cache@^2.0.3:
   version "2.1.1"
   resolved "https://registry.npm.taobao.org/v8-compile-cache/download/v8-compile-cache-2.1.1.tgz#54bc3cdd43317bca91e35dcaf305b1a7237de745"
@@ -8978,6 +8986,11 @@ vue-awesome-swiper@^4.1.1:
   resolved "https://registry.npm.taobao.org/vue-awesome-swiper/download/vue-awesome-swiper-4.1.1.tgz#8f7ab221ad003021d756b86aa618f429924900fe"
   integrity sha1-j3qyIa0AMCHXVrhqphj0KZJJAP4=
 
+vue-class-component@^7.1.0, vue-class-component@^7.2.3:
+  version "7.2.5"
+  resolved "https://registry.npm.taobao.org/vue-class-component/download/vue-class-component-7.2.5.tgz#212b3548c4fdd3314774c4adbc1c3792a40b52d0"
+  integrity sha1-ISs1SMT90zFHdMStvBw3kqQLUtA=
+
 vue-eslint-parser@^7.0.0:
   version "7.1.0"
   resolved "https://registry.npm.taobao.org/vue-eslint-parser/download/vue-eslint-parser-7.1.0.tgz?cache=0&sync_timestamp=1589539012061&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-eslint-parser%2Fdownload%2Fvue-eslint-parser-7.1.0.tgz#9cdbcc823e656b087507a1911732b867ac101e83"
@@ -9029,6 +9042,13 @@ vue-marquee-tips@^1.0.8:
   integrity sha1-X6ddiCKn+zVr+ahIavvjTrf2cqA=
   dependencies:
     vue "^2.2.6"
+
+vue-property-decorator@^8.4.2:
+  version "8.5.1"
+  resolved "https://registry.npm.taobao.org/vue-property-decorator/download/vue-property-decorator-8.5.1.tgz#571a91cf8d2b507f537d79bf8275af3184572fff"
+  integrity sha1-VxqRz40rUH9TfXm/gnWvMYRXL/8=
+  dependencies:
+    vue-class-component "^7.1.0"
 
 vue-router@^3.2.0:
   version "3.4.3"

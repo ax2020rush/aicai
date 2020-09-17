@@ -1,7 +1,12 @@
 import covers from '@/assets/img/caovue.png'
+
 export const getitem = (str) => {
   return JSON.parse(sessionStorage.getItem(str))
 }
+export const filterTime = (time = +new Date()) => {
+  var date = new Date(time + 8 * 3600 * 1000) // 增加8小时
+  return date.toJSON().substr(0, 19).replace('T', ' ')
+} // 时间戳转换为时间
 export const setitem = (str, data) => {
   return sessionStorage.setItem(str, JSON.stringify(data))
 }
@@ -365,4 +370,27 @@ export const tsk3 = (arr, str, nums = 0) => {
   } else {
     return tsk3(arr, num, nums)
   }
+}
+export const isImg = (str, bom) => {
+  if (str.slice(0, 4) === 'img[') {
+    const url = str.replace(/img/g, '').replace(/]/g, '').replace('[', '')
+    if (bom) {
+      return url
+    } else {
+      return '<img style="max-width: 100%" src="' + url + '" />'
+    }
+  } else {
+    return str
+  }
+}
+export const pushAllowed = (arr, newArr) => {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].id === newArr.id) {
+      return arr
+    }
+  }
+  const Arrs = arr.concat(newArr).sort((a, b) => {
+    return parseInt(b.id) - parseInt(a.id)
+  })
+  return Arrs
 }

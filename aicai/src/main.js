@@ -5,10 +5,13 @@ import store from './store'
 import vant, { Lazyload } from 'vant'
 import 'vant/lib/index.css'
 import loading from '@/components/loading'
+// import Socketio from 'vue-socket.io'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.min.css'
 import topbar from '@/components/topbar'
+import 'assets/aly/iconfont.css'
 Vue.use(VueAwesomeSwiper)
+
 Vue.component('topBar', topbar)
 Vue.component('v-loading', loading)
 Vue.use(vant)
@@ -21,12 +24,14 @@ router.beforeEach((to, from, next) => {
   Vue.component('openList', () => {
     return import('@/views/open/next/components/list' + to.query.type + '/index')
   })
-  to.name === 'index' || to.name === 'open' || to.name === 'user' ? Vue.prototype.$show = true : Vue.prototype.$show = false
+  to.name === 'index' || to.name === 'open' || to.name === 'user' || to.name === 'chat' ? Vue.prototype.$show = true : Vue.prototype.$show = false
   const token = sessionStorage.getItem('accessToken')
   if (to.meta.isLogin) {
     if (token) {
       next()
     } else {
+      sessionStorage.clear()
+      localStorage.clear()
       next({
         path: '/login'
       })

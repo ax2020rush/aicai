@@ -20,6 +20,7 @@ export default {
     num: String,
     name: String,
     type: String,
+    codephone: null,
     code: {
       type: Boolean,
       default: false
@@ -53,12 +54,13 @@ export default {
       const tiss = this
       let num = 60
       let mobileNumber
-      if (this.$route.name === 'register') {
+      if (this.$route.name === 'forget' || this.$route.name === 'register') {
         mobileNumber = document.querySelector('.in1').value
       } else {
         mobileNumber = tiss.$refs.smsMobil._value
       }
       if (!mobileNumber || mobileNumber.length !== 11) {
+        alert(mobileNumber)
         tiss.$toast.fail('请输入正确的手机号码')
         return
       }
@@ -153,6 +155,9 @@ export default {
       opacity: 0;
       @include tp32;
       color: $cl1;
+      cursor: pointer;
+      position: relative;
+      z-index: 9999;
     }
     .codes{
       display: flex;

@@ -41,7 +41,9 @@ export default {
         {
           title: '聊天',
           active: lt,
-          inactive: lt2
+          inactive: lt2,
+          path: '/chat',
+          id: 2
 
         },
         {
@@ -65,6 +67,8 @@ export default {
         this.active = 1
       } else if (to.name === 'user') {
         this.active = 3
+      } else if (to.name === 'chat') {
+        this.active = 2
       }
     }
   }

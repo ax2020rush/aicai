@@ -4,18 +4,12 @@
       <h1>您好,<br>欢迎来到人人爱彩</h1>
       <inputBox name="请输入手机号" ref="user" type="number"  num="1"></inputBox>
       <inputBox name="请输入密码" ref="password" type="password"  num="2"></inputBox>
-      <a @click="$router.push({path:'/forget'})">忘记密码?</a>
+      <a ><span @click="$router.push({path:'/forget'})">忘记密码?</span></a>
       <div class="btn">
         <a @click="onsubmit">登录</a>
       </div>
-      <div class="chek" style="margin-top: 20px;">
-        <van-checkbox v-model="checked"  :checked-color="scss.fontColor" shape="square">
 
-        </van-checkbox>
-        <span>我已同意</span>
-        <span>《用户服务协议》</span>
-      </div>
-      <div class="chek">
+      <div class="chek" :style="{marginTop:'30px'}">
           <span>没有账号?</span>
           <span @click="$router.push({path:'/register'})">立即注册</span>
       </div>
@@ -49,10 +43,7 @@ export default {
         this.$toast.fail('请输入密码')
         return
       }
-      if (!this.checked) {
-        this.$toast.fail('请阅读用户协议')
-        return
-      }
+
       const res = await api.login({
         mobile: user,
         password: password,
@@ -60,6 +51,8 @@ export default {
         drive: '1'
       })
       if (res.code === 200) {
+        sessionStorage.clear()
+        localStorage.clear()
         sessionStorage.setItem('userinfos', JSON.stringify(res.data))
         sessionStorage.setItem('accessToken', res.data.member.access_token)
         sessionStorage.setItem('refresh_token', res.data.member.refresh_token)

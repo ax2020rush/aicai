@@ -15,6 +15,7 @@
     "md5": "^2.3.0",
     "postcss-pxtorem": "^5.1.1",
     "swiper": "4.0.5",
+    "v-emoji-picker": "^2.2.0",
     "vant": "^2.10.3",
     "vue": "^2.6.12",
     "vue-awesome-swiper": "^4.1.1",

@@ -3,14 +3,18 @@ import VueRouter from 'vue-router'
 import index from '../views/index/index'
 
 Vue.use(VueRouter)
-
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 const routes = [
   {
     path: '/',
     name: 'index',
     component: index,
     meta: {
-      isLogin: true
+      isLogin: true,
+      title: '人人爱彩'
     }
   },
   {
@@ -18,7 +22,8 @@ const routes = [
     name: '404',
     component: () => import('views/notfile/index'),
     meta: {
-      isLogin: false
+      isLogin: false,
+      title: '人人爱彩'
     }
   },
   {
@@ -26,7 +31,8 @@ const routes = [
     name: 'login',
     component: () => import('views/login/login'),
     meta: {
-      isLogin: false
+      isLogin: false,
+      title: '人人爱彩'
     }
   },
   {
@@ -34,7 +40,9 @@ const routes = [
     name: 'register',
     component: () => import('views/login/register'),
     meta: {
-      isLogin: false
+      isLogin: false,
+      title: '人人爱彩'
+
     }
   },
   {
@@ -42,7 +50,9 @@ const routes = [
     name: 'forget',
     component: () => import('views/login/forget'),
     meta: {
-      isLogin: false
+      isLogin: false,
+      title: '人人爱彩'
+
     }
   },
   {
@@ -50,7 +60,9 @@ const routes = [
     name: 'analy',
     component: () => import('@/views/index/analy/index'),
     meta: {
-      isLogin: true
+      isLogin: true,
+      title: '人人爱彩'
+
     }
   },
   {
@@ -58,7 +70,9 @@ const routes = [
     name: 'ycfl',
     component: () => import('@/views/index/ycfl/index'),
     meta: {
-      isLogin: true
+      isLogin: true,
+      title: '人人爱彩'
+
     }
   },
   {
@@ -66,7 +80,9 @@ const routes = [
     name: 'dsfl',
     component: () => import('@/views/index/dsfl/index'),
     meta: {
-      isLogin: true
+      isLogin: true,
+      title: '人人爱彩'
+
     }
   },
   {
@@ -74,7 +90,9 @@ const routes = [
     name: 'dsxq',
     component: () => import('@/views/index/dsfl/dsdetile/index'),
     meta: {
-      isLogin: true
+      isLogin: true,
+      title: '人人爱彩'
+
     }
   },
   {
@@ -82,7 +100,9 @@ const routes = [
     name: 'chart',
     component: () => import('@/views/index/chart/index'),
     meta: {
-      isLogin: true
+      isLogin: true,
+      title: '人人爱彩'
+
     }
   },
   {
@@ -90,7 +110,9 @@ const routes = [
     name: 'chartNT',
     component: () => import('@/views/index/chart/next/inex'),
     meta: {
-      isLogin: true
+      isLogin: true,
+      title: '人人爱彩'
+
     }
   },
   {
@@ -98,7 +120,9 @@ const routes = [
     name: 'sy',
     component: () => import('@/views/index/shouyi/index'),
     meta: {
-      isLogin: true
+      isLogin: true,
+      title: '人人爱彩'
+
     }
   },
   {
@@ -106,7 +130,9 @@ const routes = [
     name: 'open',
     component: () => import('@/views/open/index'),
     meta: {
-      isLogin: true
+      isLogin: true,
+      title: '人人爱彩'
+
     }
   },
   {
@@ -114,7 +140,9 @@ const routes = [
     name: 'openNY',
     component: () => import('@/views/open/next/index'),
     meta: {
-      isLogin: true
+      isLogin: true,
+      title: '人人爱彩'
+
     }
   },
   {
@@ -122,7 +150,9 @@ const routes = [
     name: 'user',
     component: () => import('@/views/user/index'),
     meta: {
-      isLogin: true
+      isLogin: true,
+      title: '人人爱彩'
+
     }
   },
   {
@@ -130,13 +160,115 @@ const routes = [
     name: 'userio',
     component: () => import('@/views/user/userio/index'),
     meta: {
-      isLogin: true
+      isLogin: true,
+      title: '人人爱彩'
+
+    }
+  },
+  {
+    path: '/card',
+    name: 'card',
+    component: () => import('@/views/user/card/index'),
+    meta: {
+      isLogin: true,
+      title: '人人爱彩'
+
+    }
+  },
+  {
+    path: '/tixian',
+    name: 'tixian',
+    component: () => import('@/views/user/card/tixian/index'),
+    meta: {
+      isLogin: true,
+      title: '人人爱彩'
+
+    }
+  },
+  {
+    path: '/txlb',
+    name: 'txlb',
+    component: () => import('@/views/user/card/tixian/txlist/index'),
+    meta: {
+      isLogin: true,
+      title: '人人爱彩'
+
+    }
+  },
+  {
+    path: '/syls',
+    name: 'syls',
+    component: () => import('@/views/user/card/tixian/syls/index'),
+    meta: {
+      isLogin: true,
+      title: '人人爱彩'
+
+    }
+  },
+  {
+    path: '/setting',
+    name: 'setting',
+    component: () => import('@/views/user/setting/index'),
+    meta: {
+      isLogin: true,
+      title: '人人爱彩'
+
+    }
+  },
+  {
+    path: '/chat',
+    name: 'chat',
+    component: () => import('@/views/chat/index'),
+    meta: {
+      isLogin: true,
+      title: '人人爱彩'
+
+    }
+  },
+  {
+    path: '/recode',
+    name: 'recode',
+    component: () => import('@/views/chat/recode/index'),
+    meta: {
+      isLogin: true,
+      title: '人人爱彩'
+
+    }
+  },
+  {
+    path: '/xgmm',
+    name: 'xgmm',
+    component: () => import('@/views/user/setting/xgpwd'),
+    meta: {
+      isLogin: true,
+      title: '人人爱彩'
+
+    }
+  },
+  {
+    path: '/yqhy',
+    name: 'yqhy',
+    component: () => import('@/views/user/yqhy/index'),
+    meta: {
+      isLogin: true,
+      title: '人人爱彩'
+
+    }
+  },
+  {
+    path: '/help',
+    name: 'help',
+    component: () => import('@/views/user/help/index'),
+    meta: {
+      isLogin: true,
+      title: '人人爱彩'
+
     }
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })

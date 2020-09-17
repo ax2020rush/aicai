@@ -16,11 +16,6 @@ export default {
       transitionName: ''
     }
   },
-  provide () { // 在祖先组件中通过 provide 提供变量
-    return {
-      reload: this.reload //  声明一个变量
-    }
-  },
   methods: {
 
     reload () {
@@ -38,7 +33,6 @@ export default {
       this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
     },
     config (val, vl) {
-      document.title = val.data.web_site_title || '人人爱彩'
     }
   },
   created () {

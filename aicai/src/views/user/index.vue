@@ -29,15 +29,17 @@
         <van-icon @click="onsubmit" size="20" name="success" />
       </div>
     </van-popup>
-
-    <van-cell-group>
-      <van-cell class="icoo" name="userAgent.member.realname" @click="show=true" icon="gold-coin-o" is-link
+    <van-popup v-model="show2" style="width: 100%">
+      <list @changes="vals"></list>
+    </van-popup>
+    <van-cell-group v-if="userAgent">
+      <van-cell class="icoo" :name="userAgent.member.realname" @click="userAgent.member.realname?show2=true:show=true" icon="gold-coin-o" is-link
                 title="收款方式"/>
-      <van-cell class="icoo" icon="paid" is-link title="我的钱包"/>
-      <van-cell class="icoo" icon="friends-o" is-link title="邀请好友"/>
-      <van-cell class="icoo" icon="service-o" is-link title="联系客服"/>
-      <van-cell class="icoo" icon="chat-o" is-link title="帮助中心"/>
-      <van-cell class="icoo" icon="setting-o" is-link title="设置"/>
+      <van-cell class="icoo" icon="paid" to="/card" is-link title="我的钱包"/>
+      <van-cell class="icoo" to="/yqhy" icon="friends-o" is-link title="邀请好友"/>
+      <van-cell class="icoo" @click="href" icon="service-o" is-link title="联系客服"/>
+      <van-cell class="icoo" to="/help" icon="chat-o" is-link title="帮助中心"/>
+      <van-cell class="icoo" to="/setting" icon="setting-o" is-link title="设置"/>
     </van-cell-group>
   </div>
 </template>
@@ -48,6 +50,7 @@ import { mapGetters, mapActions } from 'vuex'
 import { ishttp } from 'assets/js/fun'
 import api from 'assets/js/api'
 import inputBox from 'components/inputBox'
+import list from './card/components/index'
 
 export default {
   name: 'index',
@@ -55,16 +58,21 @@ export default {
     return {
       inviteCode: '爸爸爱你',
       ishttp,
-      show: false
+      show: false,
+      show2: false
     }
   },
   computed: {
     ...mapGetters(['userAgent'])
   },
   components: {
-    inputBox
+    inputBox,
+    list
   },
   methods: {
+    href () {
+      window.open('https://cai1w.com/21/#/')
+    },
     ...mapActions(['getuser']),
     async onsubmit () {
       const user = this.$refs.user.message
@@ -84,6 +92,9 @@ export default {
       } else {
         this.$toast.fail('请输入姓名')
       }
+    },
+    vals (val) {
+      this.show2 = false
     },
     number (str) {
       return str.split('').map((index, k) => {

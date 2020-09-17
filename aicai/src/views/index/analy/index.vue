@@ -34,7 +34,6 @@ export default {
   },
   watch: {
     activeName (val, vl) {
-      console.log(scss)
     }
   },
   components: {

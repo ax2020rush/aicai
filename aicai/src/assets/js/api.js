@@ -53,8 +53,64 @@ const realname = (obj) => {
 }// 修改资料
 const upImg = (obj, data) => {
   return api.post('api/v1/file/images', obj, true, data)
+}//
+const qianbao = () => {
+  return api.get('api/v1/member/account/wallet', false, true)
+}// 我的钱包
+const addtx = (obj) => {
+  return api.post('api/v1/member/withdraw-bill', obj, true)
+}// 添加提现
+const bdtx = (obj) => {
+  return api.post('api/v1/member/account', obj, true)
+}// 绑定提现资料
+const txhis = (obj) => {
+  return api.get('api/v1/member/withdraw-bill', obj, true)
+}// 提现记录
+const syjl = (obj) => {
+  return api.get('api/v1/member/credits-log', obj, true)
+}// 收益记录
+const room = (obj) => {
+  return api.get('api/v1/room/room', obj, true)
+} // 获取房间列表
+const chatcode = (obj) => {
+  return api.get('api/v1/room/room/history', obj, true)
+}// 聊天记录
+const sendChat = (obj) => {
+  return api.post('api/v1/room/room/send-message', obj, true)
+}// 发送聊天
+const qsb = (obj) => {
+  return api.post('api/v1/room/room/get-red-package', obj, true)
+}// 抢红包
+const hbstu = (obj) => {
+  return api.post('api/v1/room/room/red-package-status', obj, true)
+}// 红包状态
+const hbxq = (obj) => {
+  return api.post('api/v1/room/room/red-package-detail', obj, true)
+}// 红包详情
+const fhb = (obj) => {
+  return api.post('api/v1/room/room/send-red-package', obj, true)
+}// 发红包
+const cehui = (obj) => {
+  return api.post('api/v1/room/room/revoke-message', obj, true)
+}// 撤回消息
+const bind = (obj) => {
+  return api.post('api/v1/room/room/bind', obj, true)
+}// 初始化通信
+const settings = obj => {
+  return api.post('api/v1/room/room/room-settings', obj, true)
+}// 房间设置
+const xgmm = (obj) => {
+  return api.post('api/v1/member/member/update-password', obj, true)
+}// 修改密码
+const wjmm = (obj) => {
+  return api.post('/api/v1/site/up-pwd', obj)
 }
 export default {
+  wjmm,
+  xgmm,
+  settings,
+  bind,
+  cehui,
   banner,
   indexApp,
   resgiter,
@@ -72,5 +128,17 @@ export default {
   getUser,
   sign,
   realname,
-  upImg
+  upImg,
+  qianbao,
+  addtx,
+  bdtx,
+  txhis,
+  syjl,
+  room,
+  chatcode,
+  sendChat,
+  qsb,
+  hbstu,
+  hbxq,
+  fhb
 }
