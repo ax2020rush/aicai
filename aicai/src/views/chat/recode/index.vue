@@ -122,7 +122,7 @@
       <img :src="gbbg" alt="">
       <div v-if="gq" :style="{zIndex:'999'}">
         <p>恭喜发财,大吉大利</p>
-        <a @click="hbshow=true"> 看看别人手气</a>
+        <a @click="hbshow=true,getHb()"> 看看别人手气</a>
       </div>
       <div v-else>
         <p v-if="qw">红包已过期,系统已回收</p>

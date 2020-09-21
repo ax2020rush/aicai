@@ -17,7 +17,7 @@
                 style="background:#F9F9F9;padding-bottom: 2px;display: flex;align-items: center;" title="头像" >
         <div slot="default">
           <van-uploader  style="position:absolute;right: -28px;z-index: 999;top: 0;opacity: 0" max-count="1" v-model="fileList" :after-read="afterRead" />
-          <van-image round  width="40" height="40" :name="userAgent.member.head_portrait" :src="img||ishttp(userAgent.member.head_portrait,true)" />
+          <van-image fit="cover" round  width="40" height="40" :name="userAgent.member.head_portrait" :src="img||ishttp(userAgent.member.head_portrait,true)" />
         </div>
       </van-cell>
       <van-cell @click="show=true,type=1" :value="userAgent.member.nickname" border is-link title-style="display:flex;align-items:center"

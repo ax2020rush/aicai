@@ -2,7 +2,7 @@
   <div class="user">
     <div class="head">
       <div v-if="userAgent">
-        <van-image @click="$router.push({path:'/userio'})" round width="60" height="60"
+        <van-image @click="$router.push({path:'/userio'})" fit="cover" round width="60" height="60"
                    :src="ishttp(userAgent.member.head_portrait,true)"/>
         <div>
           <p>{{ userAgent.member.nickname }}</p>
