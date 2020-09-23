@@ -56,7 +56,7 @@ export default {
       const res = await api.resgiter({
         mobile: user,
         code: code,
-        group: 'h5',
+        group: 'app',
         drive: '1',
         promo_code: yqm,
         password: password,
@@ -64,10 +64,6 @@ export default {
       })
       if (res.code === 200) {
         this.$router.push({ path: '/' })
-        this.$notify({
-          type: 'success',
-          message: res.message
-        })
       } else {
         this.$toast.fail({
           message: res.message,

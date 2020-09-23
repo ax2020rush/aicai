@@ -76,10 +76,7 @@ export default {
           this.$toast.fail(res.data.message)
           return
         }
-        tiss.$notify({
-          type: 'success',
-          message: '发送成功,请注意查收'
-        })
+
         const time = setInterval(() => {
           // eslint-disable-next-line no-const-assign
           num--

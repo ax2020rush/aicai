@@ -144,7 +144,6 @@ export default {
           pingtai_user_name: this.$refs.user.message
         })
         if (res.code === 200) {
-          this.$toast.success(res.message)
           this.shows = false
           this.$store.dispatch('getuser')
         } else {
@@ -162,7 +161,6 @@ export default {
           bank_card: this.$refs.user2.message
         })
         if (res.code === 200) {
-          this.$toast.success(res.message)
           this.shows2 = false
           this.$store.dispatch('getuser')
         } else {
@@ -183,7 +181,6 @@ export default {
         obj.alipay_account_url = res.data.url
         const ds = await api.bdtx(obj)
         if (ds.code === 200) {
-          this.$toast.success('上传成功')
           this.$store.dispatch('getuser')
         } else {
           this.$toast.fail(ds.message)
@@ -203,7 +200,6 @@ export default {
         obj.wechat_account_url = res.data.url
         const ds = await api.bdtx(obj)
         if (ds.code === 200) {
-          this.$toast.success('上传成功')
           this.$store.dispatch('getuser')
         } else {
           this.$toast.fail(ds.message)

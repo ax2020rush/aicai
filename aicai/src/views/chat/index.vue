@@ -2,7 +2,7 @@
 <div>
   <topBar title="聊天"></topBar>
   <van-cell-group v-if="data">
-    <van-cell :to="'/recode?id='+item.id+'&&room='+item.name" title-style="color:#2196F3;" v-for="(item,k) in data.data" :key="k">
+    <van-cell :to="'/recode?id='+item.id+'&&room='+item.name" :name="item.name" title-style="color:#2196F3;" v-for="(item,k) in data.data" :key="k">
       <div slot="icon" :style="{marginRight:'10px'}">
         <van-image
             width="50"
@@ -13,10 +13,10 @@
         />
       </div>
       <div slot="title">{{item.name}}</div>
-      <div slot="label">
+      <div slot="label" v-if="item.msg">
         {{item.msg.msg_type==='1'?item.msg.content:item.msg.msg_type==='2'?'[图片]':'[红包]'}}
       </div>
-      <div class="tips"  slot="right-icon">{{timeFormat(item.msg&&item.msg.sent_at*1000)}}</div>
+      <div v-if="item.msg" class="tips"  slot="right-icon">{{timeFormat(item.msg&&item.msg.sent_at*1000)}}</div>
     </van-cell>
   </van-cell-group>
 </div>

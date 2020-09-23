@@ -39,7 +39,6 @@ export default {
 
       })
       if (res.code === 200) {
-        this.$toast.success('修改成功,请重新登录')
         localStorage.clear()
         sessionStorage.clear()
         this.$router.push({ path: '/login' })

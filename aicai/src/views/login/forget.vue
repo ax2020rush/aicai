@@ -50,13 +50,12 @@ export default {
       const res = await api.wjmm({
         mobile: user,
         code: code,
-        group: 'h5',
+        group: 'app',
         password: password,
         password_repetition: password
 
       })
       if (res.code === 200) {
-        this.$toast.success('修改成功请前往登录')
         this.$router.push({ path: 'login' })
       } else {
         this.$toast.fail(res.message)

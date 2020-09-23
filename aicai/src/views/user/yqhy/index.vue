@@ -48,8 +48,8 @@ export default {
     copy (e, text) {
       const clipboard = new Clipboard(e.target, { text: () => text })
       clipboard.on('success', e => {
-        this.$toast.success('复制成功')
         // 释放内存
+        this.$toast.success('复制成功')
         clipboard.off('error')
         clipboard.off('success')
         clipboard.destroy()

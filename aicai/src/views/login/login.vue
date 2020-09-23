@@ -47,7 +47,7 @@ export default {
       const res = await api.login({
         mobile: user,
         password: password,
-        group: 'h5',
+        group: 'app',
         drive: '1'
       })
       if (res.code === 200) {
@@ -57,10 +57,6 @@ export default {
         sessionStorage.setItem('accessToken', res.data.member.access_token)
         sessionStorage.setItem('refresh_token', res.data.member.refresh_token)
         this.$router.push({ path: '/' })
-        this.$notify({
-          type: 'success',
-          message: res.message
-        })
       } else {
         this.$toast.fail({
           message: res.message,

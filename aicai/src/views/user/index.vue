@@ -82,7 +82,6 @@ export default {
           realname: user
         })
         if (res.code === 200) {
-          this.$toast.success('绑定成功')
           this.$refs.user.message = null
           this.show = false
           this.getuser()

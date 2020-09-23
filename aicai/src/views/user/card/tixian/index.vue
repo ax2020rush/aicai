@@ -84,7 +84,7 @@ export default {
         type: this.index + 1
       })
       if (res.code === 200) {
-        this.$toast.success(res.message)
+
       } else {
         this.showbox = true
       }

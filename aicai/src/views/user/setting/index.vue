@@ -17,7 +17,6 @@ export default {
     goOut () {
       sessionStorage.clear()
       localStorage.clear()
-      this.$notify({ type: 'success', message: '退出成功,请重新登录' })
       setTimeout(() => {
         this.$router.push({ path: '/login' })
       }, 1000)

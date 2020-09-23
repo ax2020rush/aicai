@@ -67,7 +67,6 @@ export default {
         obj.head_portrait = res.data.url
         this.getuser()
         await api.realname(obj)
-        this.$toast.success('上传成功')
       } else {
         this.$toast.fail('上传失败，请稍后重试')
       }
@@ -86,7 +85,6 @@ export default {
       if (obj.nickname || obj.realname) {
         const res = await api.realname(obj)
         if (res.code === 200) {
-          this.$toast.success('绑定成功')
           this.$refs.user.message = null
           this.show = false
           this.getuser()
