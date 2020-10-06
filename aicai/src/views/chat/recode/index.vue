@@ -164,9 +164,9 @@
 
           <div slot="right-icon" class="rico">
 
-            <span @click="fasong" style="color: #222222;cursor: pointer" class="iconfont">&#xe60e;</span>
+            <span @click="fasong"  style="color: #222222;cursor: pointer" class="iconfont">&#xe60e;</span>
           </div>
-          <input style="padding: 0 2%" @click.stop="" v-model="value" slot="input" type="text"
+          <input style="padding: 0 2%" @click.stop="" @keyup.enter="fasong" v-model="value" slot="input" type="text"
                  class="van-field__control">
           <span @click.stop="vemoji" slot="input" class="iconfont">&#xe629;</span>
         </van-field>
@@ -366,6 +366,8 @@ export default {
     tcql (k) {
       if (this.$store.state.userAgent.data.member.type === '10') {
         this.tcs = k
+      } else {
+        return false
       }
     },
     async shtg (type, id, k) {
@@ -637,9 +639,16 @@ export default {
         }
         if (res.data.length >= 10 && this.tys === false) {
           this.$nextTick(() => {
+            const soTop = parseInt(this.$refs.cont.scrollTop)
+
             // scrollHeight  clientHeight
             this.$refs.cont.addEventListener('scroll', () => {
-              const num = parseInt(this.$refs.cont.scrollHeight - this.$refs.cont.clientHeight + this.$refs.cont.scrollTop)
+              let num
+              if (soTop > 100) {
+                num = parseInt(this.$refs.cont.scrollTop)
+              } else {
+                num = parseInt(this.$refs.cont.scrollHeight - this.$refs.cont.clientHeight + this.$refs.cont.scrollTop)
+              }
               if (num < 5) {
                 if (this.tys) {
                 } else {
@@ -1132,9 +1141,13 @@ export default {
             text-align: right;
           }
         }
-
+        .tgh{
+          width: 100%;
+          text-align: right !important;
+          position: relative;
+          right: 4%;
+        }
         > div {
-
           &:first-child {
             display: flex;
             align-items: center;
@@ -1165,18 +1178,20 @@ export default {
 
           &:last-child {
             @include tp30;
-            margin-left: 4%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: left;
-
+            text-align: left;
+            width: 100%;
             p {
+              position: relative;
+              left: 4%;
               background: #E0E0E0;
               padding: 2% 4%;
               border-radius: 10px;
               @include tp30;
               margin-top: 10px;
               font-size: 26px;
+              display: inline-flex;
+              word-break: break-all;
+              width: auto;
             }
           }
         }

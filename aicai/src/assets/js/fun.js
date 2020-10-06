@@ -18,12 +18,12 @@ export const ishttp = (str, cover) => {
       return ''
     }
   }
-  return str
-  // if (str.slice(0, 4) === 'http') {
-  //   return str
-  // } else {
-  //   return process.env.VUE_APP_API_ROOT + str
-  // }
+  // return str
+  if (str.slice(0, 4) === 'http') {
+    return str
+  } else {
+    return process.env.VUE_APP_API_ROOT + str
+  }
 }
 export const iscz = (str) => {
   if (parseInt(str) === 1801) {

@@ -4,6 +4,7 @@ import store from '@/store/index'
 import { Toast, Notify } from 'vant'
 import Router from '@/router/index'
 const qs = require('qs')
+
 export const getlocal = (i) => {
   // 参数i为时区值数字，比如北京为东八区则输进8,西5输入-5
   if (typeof i !== 'number') return
@@ -16,6 +17,7 @@ export const getlocal = (i) => {
   var utcTime = len + offset
   return new Date(utcTime + 3600000 * i)
 }
+
 export const Md5Keys = (key) => {
   const str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
   let newStr = ''// 生成8位随机字符串

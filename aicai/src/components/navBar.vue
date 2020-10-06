@@ -58,6 +58,16 @@ export default {
   },
 
   mounted () {
+    const to = this.$route
+    if (to.name === 'index') {
+      this.active = 0
+    } else if (to.name === 'open') {
+      this.active = 1
+    } else if (to.name === 'user') {
+      this.active = 3
+    } else if (to.name === 'chat') {
+      this.active = 2
+    }
   },
   watch: {
     '$route' (to, from) {

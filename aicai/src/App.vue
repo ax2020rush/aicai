@@ -9,16 +9,17 @@
 <script>
 import navBar from '@/components/navBar'
 import { mapGetters } from 'vuex'
+import { soket } from 'assets/js/soket'
 export default {
   name: 'app',
   data () {
     return {
-      transitionName: ''
+      transitionName: '',
+      soketStatus: true
 
     }
   },
   methods: {
-
     reload () {
       // 通过 this.isRouterAlive 控制 router-view 达到刷新效果
       this.isRouterAlive = false
@@ -29,14 +30,20 @@ export default {
   },
   watch: {
     '$route' (to, from) {
+      if (to.name !== 'login' && to.name !== 'register' && to.name !== 'forget') {
+        if (this.soketStatus) {
+          soket()
+          this.soketStatus = false
+        }
+      } else {
+        this.soketStatus = true
+      }
       const toDepth = to.path.split('/').length
       const fromDepth = from.path.split('/').length
       this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left'
     },
     config (val, vl) {
     }
-  },
-  created () {
   },
   computed: {
     ...mapGetters(['config'])

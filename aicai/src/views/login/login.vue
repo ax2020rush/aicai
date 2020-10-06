@@ -22,7 +22,6 @@
 import inputBox from '@/components/inputBox'
 import scss from '@/assets/css/index.scss'
 import api from '@/assets/js/api'
-import { soket } from 'assets/js/soket'
 
 export default {
   name: 'login',
@@ -57,7 +56,6 @@ export default {
         sessionStorage.setItem('userinfos', JSON.stringify(res.data))
         sessionStorage.setItem('accessToken', res.data.member.access_token)
         sessionStorage.setItem('refresh_token', res.data.member.refresh_token)
-        soket()
         this.$router.push({ path: '/' })
       } else {
         this.$toast.fail({
