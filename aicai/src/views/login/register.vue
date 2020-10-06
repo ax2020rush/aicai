@@ -22,6 +22,7 @@
 import inputBox from '@/components/inputBox'
 import scss from '@/assets/css/index.scss'
 import api from '@/assets/js/api'
+import { soket } from 'assets/js/soket'
 
 export default {
   name: 'register',
@@ -49,10 +50,7 @@ export default {
         this.$toast.fail('请输入密码')
         return
       }
-      if (!yqm) {
-        this.$toast.fail('请输入邀请码')
-        return
-      }
+
       const res = await api.resgiter({
         mobile: user,
         code: code,
@@ -63,6 +61,12 @@ export default {
         password_repetition: password
       })
       if (res.code === 200) {
+        sessionStorage.clear()
+        localStorage.clear()
+        sessionStorage.setItem('userinfos', JSON.stringify(res.data))
+        sessionStorage.setItem('accessToken', res.data.member.access_token)
+        sessionStorage.setItem('refresh_token', res.data.member.refresh_token)
+        soket()
         this.$router.push({ path: '/' })
       } else {
         this.$toast.fail({

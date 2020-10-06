@@ -60,7 +60,6 @@ export default {
         mobileNumber = tiss.$refs.smsMobil._value
       }
       if (!mobileNumber || mobileNumber.length !== 11) {
-        alert(mobileNumber)
         tiss.$toast.fail('请输入正确的手机号码')
         return
       }

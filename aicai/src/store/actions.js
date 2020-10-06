@@ -42,6 +42,12 @@ const actions = {
   async getuser ({ state, commit }) {
     const res = await api.getUser()
     commit('USERAGENT', res)
+  },
+  getMessage ({ commit }, res) {
+    commit('MESSAGE', res)
+  },
+  getMessageNum ({ commit }, res) {
+    commit('MESSAGENUM', res)
   }
 }
 export default actions

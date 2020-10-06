@@ -104,8 +104,32 @@ const xgmm = (obj) => {
 }// 修改密码
 const wjmm = (obj) => {
   return api.post('/api/v1/site/up-pwd', obj)
-}
+}// 忘记密码
+const qzsq = (obj) => {
+  return api.post('api/v1/room/room/apply-join-room', obj, true)
+}//
+const sqlist = (obj) => {
+  return api.post('/api/v1/room/room/apply-join-room-list', obj, true)
+}// 入群申请列表
+const ruqunsq = (obj) => {
+  return api.post('api/v1/room/room/handle-join-room', obj, true)
+}// 入群申请
+const yichu = (obj) => {
+  return api.post('api/v1/room/room/remove-member', obj, true)
+}// 移除群聊
+const pinbi = (obj) => {
+  return api.post('api/v1/room/room/remove-message', obj, true)
+}// 屏蔽消息
+const newMessage = (obj) => {
+  return api.post('api/v1/room/room/update-message', obj, true)
+}// 重新拉去新消息
 export default {
+  newMessage,
+  pinbi,
+  yichu,
+  ruqunsq,
+  sqlist,
+  qzsq,
   wjmm,
   xgmm,
   settings,

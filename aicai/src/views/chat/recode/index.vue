@@ -1,6 +1,46 @@
 <template>
-  <div :style="{height:'100%',overflow:'hidden',display:'flex',flexDirection:'column',background:'#ffffff'}">
-    <topBar :title="$route.query.room"></topBar>
+  <div @click.stop="tcs=false"
+       :style="{height:'100%',overflow:'hidden',display:'flex',flexDirection:'column',background:'#ffffff'}">
+    <van-popup v-model="acc" class="popright" position="right">
+      <div class="head">
+        <van-icon @click="acc=false" name="arrow-left"/>
+        <p>加群申请</p>
+      </div>
+      <van-cell-group>
+        <van-cell
+            v-for="(item,k) in sqlist"
+            :key="k"
+        >
+          <van-image slot="icon" width="40" height="40"
+                     :style="{margin:'0px 10px'}"
+                     round
+                     :src="ishttp(item.member.head_portrait,true)"/>
+          <div slot="title">
+            <p>{{ item.member.nickname }}</p>
+            <p>{{ timeFormat(item.updated_at * 1000) }}</p>
+          </div>
+          <div slot="default" v-if="item.status==='0'">
+            <van-button size="mini" type="info" @click="shtg(1,item.member_id,k)">同意</van-button>
+            <van-button size="mini" type="warning" @click="shtg(-1,item.member_id,k)">拒绝</van-button>
+          </div>
+          <div slot="default" v-if="item.status==='1'">
+            <van-button size="mini" type="primary">已通过</van-button>
+          </div>
+          <div slot="default" v-if="item.status==='-1'">
+            <van-button disabled size="mini" color="#8d8d8d" type="primary">已拒绝</van-button>
+          </div>
+        </van-cell>
+
+      </van-cell-group>
+    </van-popup>
+    <topBar :title="$route.query.room">
+      <div class="slotRight" v-if="$store.state.userAgent&&$store.state.userAgent.data.member.type==='10'" slot="right">
+
+        <van-icon v-if="rqsq!=0" name="plus" :badge="rqsq" @click="getSq" class="plus" :class="{active:acc}"/>
+        <van-icon v-else name="plus" @click="getSq" class="plus" :class="{active:acc}"/>
+
+      </div>
+    </topBar>
     <van-image-preview v-model="show" :images="images">
     </van-image-preview>
     <div class="Notice">
@@ -8,15 +48,29 @@
       <MarqueeTips :content="maptips" :speed="20"></MarqueeTips>
     </div>
     <div class="chats" @click="eomjs">
-      <div class="cont" ref="cont" v-if="list.length>0">
-        <div v-for="(item,k) in list" :key="k">
-          <div v-if="item.sender.nickname!==($store.state.userAgent&&$store.state.userAgent.data.member.nickname)">
-            <van-image width="40" height="40"
+      <div class="cont" ref="cont" v-if="list&&list.length>0">
+        <div v-for="(item,k) in list" :key="k" :style="{position: 'relative'}">
+          <div class="tcs"
+               v-if="item.sender.role_type==='1'&&tcs===k&&item.sender.nickname!==($store.state.userAgent&&$store.state.userAgent.data.member.nickname)&&chsta.includes(item.id)===false">
+            <p @click="pinbi(item.id,k)">屏蔽消息</p>
+            <p @click="tichu(item.sender.nickname,item.sender.id)">踢出群聊</p>
+          </div>
+          <div
+              v-if="item.sender.nickname!==($store.state.userAgent&&$store.state.userAgent.data.member.nickname)&&chsta.includes(item.id)===false&&tcqy.includes(item.id)===false">
+            <van-image @click.stop="tcql(k)" width="40" height="40"
                        round
                        fit="cover"
-                       :src="ishttp(item.sender.head_portrait,true)"/>
+                       style="position: relative"
+                       :src="ishttp(item.sender.head_portrait,true)">
+
+            </van-image>
+
             <div>
-              <div>
+
+              <div @touchstart="star(k)" @touchend="end" name="1" class="rgd2 ">
+                 <span class="tips" v-if="stip===k&&item.msg_type!=='2'&&item.msg_type!=='3'">
+                      <span @click="copy($event,item.content)"> <i class="iconfont">&#xe616;</i>复制</span>
+             </span>
                 <p>{{ item.sender.nickname }}</p>
                 <span>{{ item.sender.memberLevel.name }}</span>
                 <p>{{ item.sent_at && filterTime(item.sent_at * 1000).slice(5) }}</p>
@@ -34,7 +88,9 @@
               </div>
             </div>
           </div>
-          <div v-else-if="chsta.includes(k)===false" class="right">
+          <div
+              v-if="item.sender.nickname===($store.state.userAgent&&$store.state.userAgent.data.member.nickname)&&chsta.includes(item.id)===false&&tcqy.includes(item.id)===false"
+              class="right">
             <div>
 
             </div>
@@ -45,7 +101,8 @@
               <div class="tgh">
                 <p class="rgd">
                   <span class="tips" v-if="stip===k">
-                      <span @click="copy($event,item.content)"> <i class="iconfont">&#xe616;</i>复制</span>
+                      <span v-if="item.msg_type!=='2'" @click="copy($event,item.content)"> <i
+                          class="iconfont">&#xe616;</i>复制</span>
                       <span @click="cehui(item.id,k)"> <i class="iconfont">&#xe710;</i>撤回</span>
                     </span>
                   <span style="user-select: none;" @touchstart="star(k)" @touchend="end" v-if="item.msg_type!=='3'"
@@ -68,16 +125,21 @@
               </div>
             </div>
           </div>
-          <div class="delete" v-else>
-            <span>{{ $store.state.userAgent.data.member.nickname }}撤回了一条消息</span>
+          <div class="delete" v-if="chsta.includes(item.id)">
+            <span>{{ item.sender.nickname }}撤回了一条消息</span>
+          </div>
+          <div class="delete" v-if="tcqy.includes(item.id)">
+            <span>{{ item.sender.nickname }}的发言已被管理员屏蔽</span>
           </div>
         </div>
         <p v-if="ts" class="ts"></p>
 
       </div>
 
-      <v-loading v-else></v-loading>
-      <div class="hb">
+      <div class="loding" v-else>
+      </div>
+      <div class="hb"
+           v-if="can_send_redpackage===2||($store.state.userAgent&&$store.state.userAgent.data.member.type===10)">
         <van-image
             @click="sendeHb" name="bill"
             width="30px"
@@ -170,10 +232,10 @@ import VEmojiPicker from 'v-emoji-picker'
 import hb from 'assets/img/pthb.png'
 import gbbg from 'assets/img/red_packet_big.png'
 import roomhb from 'assets/img/room_hb.png'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import api from 'assets/js/api'
 import MarqueeTips from 'vue-marquee-tips'
-import { filterTime, ishttp, isImg, pushAllowed } from 'assets/js/fun'
+import { filterTime, ishttp, isImg, pushAllowed, timeFormat } from 'assets/js/fun'
 import gbnav from 'components/hb'
 import open from 'assets/img/open_icon.png'
 import Clipboard from 'clipboard'
@@ -182,7 +244,9 @@ export default {
   name: 'index',
   data () {
     return {
+      tcs: false,
       hbshow2: false,
+      timeFormat,
       hbshow: false,
       show: false,
       gbbg,
@@ -217,8 +281,53 @@ export default {
       zdget: true,
       maptips: null,
       close: true,
-      content: null
-
+      content: null,
+      can_send_redpackage: null,
+      acc: false,
+      qsh: false,
+      tcqy: [],
+      sqlist: null,
+      rqsq: 0, // 入群申请数量
+      cl: true,
+      cds: false,
+      gds: true
+    }
+  },
+  computed: {
+    ...mapState({
+      chartMessage: 'chartMessage'
+    })
+  },
+  watch: {
+    status (vl, v2) {
+    },
+    chartMessage (redata, vl) {
+      // 数据接收
+      if (redata.type === 'cmd' && redata.order === 'remove_room' && parseInt(redata.room_id) === parseInt(this.$route.query.id)) {
+        this.$toast.fail('您已被移出群聊')
+        this.$router.push({ path: '/chat' })
+      }
+      if (redata.type === 'cmd' && redata.order === 'remove_message') {
+        this.tcqy.push(redata.msg_id.toString())
+      }
+      if (redata.type === 'cmd' && redata.order === 'revoke_message') {
+        this.chsta.push(redata.msg_id.toString())
+      }
+      if (redata.type === 'message' && parseInt(redata.room_id) === parseInt(this.$route.query.id)) {
+        this.getchat(false, true)
+        this.zdget = false// 切换到实时获取聊天记录
+        let newObj = {}
+        newObj = redata
+        newObj.id = redata.msg_id
+        newObj.sent_at = redata.time
+        newObj.sender.memberLevel = {
+          name: redata.sender.level
+        }
+        this.list = pushAllowed(this.list, newObj)
+      }
+      if (redata.order === 'apply_join_room') {
+        this.rqsq = '!'
+      }
     }
   },
   components: {
@@ -226,16 +335,68 @@ export default {
     gbnav,
     VEmojiPicker
   },
-  destroyed () {
-    this.close = false
-    this.websoket.close() // 离开路由之后断开websocket连接
-  },
+
   methods: {
+    tichu (name, id) {
+      this.$dialog.confirm({
+        message: '将成员' + name + '移除群聊'
+      })
+        .then(async () => {
+          const res = await api.yichu({
+            room_id: this.$route.query.id,
+            member_id: id
+          })
+          if (res.code === 422) {
+            this.$toast.fail(res.message)
+          }
+        })
+        .catch(() => {
+          // on cancel
+        })
+    },
+    async pinbi (id, k) {
+      const res = await api.pinbi({
+        room_id: this.$route.query.id,
+        id: id
+      })
+      if (res.code === 200) {
+        this.tcqy.push(id)
+      }
+    },
+    tcql (k) {
+      if (this.$store.state.userAgent.data.member.type === '10') {
+        this.tcs = k
+      }
+    },
+    async shtg (type, id, k) {
+      const res = await api.ruqunsq({
+        room_id: this.$route.query.id,
+        member_id: id,
+        type: type
+      })
+
+      if (res.code === 200) {
+        this.sqlist[k].status = String(type)
+      } else {
+        this.$toast.fail(res.message)
+      }
+    },
+    async getSq () {
+      this.rqsq = 0
+      this.acc ? this.acc = false : this.acc = true
+      if (this.acc === true) {
+        const res = await api.sqlist({
+          room_id: this.$route.query.id
+        })
+        this.sqlist = res.data
+      }
+    },
     async roomSet () {
       const res = await api.settings({
         id: this.$route.query.id
       })
       this.maptips = res.data.notice
+      this.can_send_redpackage = res.data.can_send_redpackage
     },
     initWebSoket () {
       const url = 'ws://ws.lemaifangzhi.com:8585/'
@@ -256,12 +417,28 @@ export default {
       }, 3000)
     },
     websocketonerror () { // 连接建立失败重连
-      if (this.close) {
-        this.initWebSoket()
+      // clearInterval(this.soketTimes)
+      if (this.gds) {
+        this.gds = false
+        setTimeout(() => {
+          this.status = true
+          this.initWebSoket()
+          this.gds = true
+        }, 5000)
       }
     },
     websocketonmessage (e) { // 数据接收
       const redata = JSON.parse(e.data)
+      if (redata.type === 'cmd' && redata.order === 'remove_room' && parseInt(redata.room_id) === parseInt(this.$route.query.id)) {
+        this.$toast.fail('您已被移出群聊')
+        this.$router.push({ path: '/chat' })
+      }
+      if (redata.type === 'cmd' && redata.order === 'remove_message') {
+        this.tcqy.push(redata.msg_id.toString())
+      }
+      if (redata.type === 'cmd' && redata.order === 'revoke_message') {
+        this.chsta.push(redata.msg_id.toString())
+      }
       if (redata.type === 'message' && parseInt(redata.room_id) === parseInt(this.$route.query.id)) {
         this.getchat(false, true)
         this.zdget = false// 切换到实时获取聊天记录
@@ -274,12 +451,21 @@ export default {
         }
         this.list = pushAllowed(this.list, newObj)
       }
+      if (redata.type === 'cmd' && redata.order === 'apply_join_room') {
+        this.rqsq += 1
+      }
       if (redata.type === 'cmd' && this.status) {
         this.status = false
+        this.cl = true
         this.websocketsend(JSON.stringify({ type: 'init' }))
-        api.bind({
-          client_id: redata.client_id
-        })
+        setTimeout(async () => {
+          const res = await api.bind({
+            client_id: redata.client_id
+          })
+          if (res.code === 200) {
+            this.getchat(false, true)
+          }
+        }, 300)
       } else {
         this.websocketsend(JSON.stringify({ type: 'cmd' }))
       }
@@ -288,7 +474,13 @@ export default {
       this.websoket.send(Data)
     },
     websocketclose (e) { // 关闭
-      clearInterval(this.soketTimes)
+      if (this.cl) {
+        this.cl = false
+        setTimeout(() => {
+          this.initWebSoket()
+          this.status = true
+        }, 5000)
+      }
     },
     eomjs () {
       this.emojiShow = false
@@ -315,7 +507,6 @@ export default {
         id: id
       })
       if (res.code === 200) {
-        this.chsta.push(k)
       } else {
         this.$toast.fail(res.message)
       }
@@ -451,15 +642,12 @@ export default {
               const num = parseInt(this.$refs.cont.scrollHeight - this.$refs.cont.clientHeight + this.$refs.cont.scrollTop)
               if (num < 5) {
                 if (this.tys) {
-
                 } else {
                   if (this.list.slice(this.list.length - 1)[0].id) {
                     this.getchat(this.list.slice(this.list.length - 1)[0].id)
                   }
                 }
                 this.tys = true
-
-                // this.getchat(res.data.slice(res.data.length - 1).id)
               }
             })
           })
@@ -511,13 +699,26 @@ export default {
         clipboard.destroy()
       })
       clipboard.onClick(e)
+    },
+    delete (arr) {
+      if (!arr) {
+        return
+      }
+      for (let i = 0; i < arr.length; i++) {
+        arr[i].num = 0
+      }
+      this.$store.dispatch('getMessageNum', arr)
     }
+  },
+  destroyed () {
+    this.delete(this.$store.state.messageNum)
   },
   created () {
     this.getchat()
     this.getuser()
-    this.initWebSoket()
+    // this.initWebSoket()
     this.roomSet()
+    this.delete(this.$store.state.messageNum)
   },
 
   mounted () {
@@ -527,10 +728,110 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.tcs {
+  position: absolute;
+  left: 20px;
+  top: 80px;
+  z-index: 99;
+  background: #ffffff;
+  padding: 0px 0px;
+  box-shadow: 0PX 0PX 6PX #d1d1d1;
+  font-size: 30px;
+  display: flex;
+  flex-direction: column;
+
+  p {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 16px 20px;
+  }
+}
+
+.popright {
+  width: 100%;
+  height: 100%;
+
+  .van-cell {
+    display: flex;
+    align-items: center;
+    align-items: center;
+
+    .van-cell__title div {
+      display: flex;
+      justify-content: space-between;
+
+      p {
+        &:last-child {
+          color: #888888;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  .head {
+    width: 94;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+    padding: 0 3%;
+
+    p {
+      font-size: 34px;
+      color: #444444;
+    }
+
+    &:after {
+      content: '';
+    }
+  }
+}
+
+.plus.active {
+  &:before {
+    transition: .5s;
+    transform: rotate(90deg);
+  }
+}
+
+.slotRight {
+  position: relative;
+
+  .right_bt {
+    transition: .3s;
+    position: absolute;
+    right: 0;
+    bottom: 0PX;
+    background: #ffffff;
+    height: 60px;
+    width: auto;
+    padding: 10px 30px;
+    color: #333333;
+    box-shadow: 0PX 0PX 3PX #5858581f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    white-space: nowrap;
+  }
+}
+
+.plus {
+  &:before {
+    transition: .5s;
+    transform: rotate(0deg);
+  }
+}
+
 .moji {
   > div {
     display: none;
   }
+}
+
+.loding {
+  width: 100%;
+  height: 100%;
 }
 
 .showfhb {
@@ -764,6 +1065,13 @@ export default {
   display: flex;
   flex-direction: column-reverse;
 
+  > div:first-child {
+    .tcs {
+      left: 100px;
+      top: 0;
+    }
+  }
+
   > div > div {
     display: flex;
     margin-bottom: 5%;
@@ -775,7 +1083,58 @@ export default {
         word-break: keep-all;
         width: 80%;
 
+        .rgd2 {
+          position: relative;
+          display: flex;
+          flex-wrap: wrap;
+
+          .tips {
+            background: #7d7d7df0;
+            width: 400px;
+            position: absolute;
+            top: -60px;
+            z-index: 999;
+            left: 0;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            animation: moves .5s;
+            @keyframes moves {
+              to {
+                opacity: 1;
+              }
+              from {
+                opacity: 0;
+              }
+            }
+
+            span {
+              display: flex;
+              word-break: keep-all;
+              width: 50%;
+              justify-content: center;
+              color: $ballBlue;
+
+              i {
+                width: auto;
+                color: $red;
+                cursor: pointer;
+              }
+            }
+          }
+
+          i {
+            right: 0;
+            width: 100%;
+            bottom: 0;
+            text-align: right;
+          }
+        }
+
         > div {
+
           &:first-child {
             display: flex;
             align-items: center;
@@ -787,6 +1146,7 @@ export default {
               color: $cl;
               display: flex;
               align-items: center;
+              margin-left: 26px;
 
               &:first-child {
                 margin-left: 4%;

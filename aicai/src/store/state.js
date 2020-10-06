@@ -10,7 +10,10 @@ const state = {
   chart: null,
   clph: null,
   userInfo: getitem('userinfos') || null,
-  userAgent: null
+  userAgent: null,
+  chartMessage: null,
+  status: false,
+  messageNum: null
 
 }
 export default state

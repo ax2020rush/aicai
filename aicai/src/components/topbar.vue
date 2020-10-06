@@ -2,6 +2,7 @@
   <div class="head">
     <a class="goleft" @click="$router.go(-1)"></a>
     <h2>{{title}}</h2>
+    <slot class="right" name="right"></slot>
   </div>
 </template>
 
@@ -18,6 +19,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .head{
   width: 100%;
   height: 110px;
@@ -33,6 +35,10 @@ export default {
   &:after{
     content: ""; width: 0%; display: block; height:0; width:0%;
     /*只需要添加父元素的after伪元素中 高度0 ，宽度与item的宽一样*/
+  }
+  >div{
+    position: absolute;
+    right: 3%;
   }
 }
 .goleft{

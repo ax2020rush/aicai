@@ -9,7 +9,7 @@ const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i // 
 // eslint-disable-next-line camelcase
 const Is_Pord = ['production', 'test'].includes(process.env.VUE_APP_SERVER_EVN) // 这里的Is_Pord指的是生产环境和测试环境(这里统称Is_Pord)
 module.exports = {
-  outputDir: 'dist',
+  outputDir: 'aicai',
   publicPath: process.env.NODE_ENV === 'production'
     ? './'
     : '/',

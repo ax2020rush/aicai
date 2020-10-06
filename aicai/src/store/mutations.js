@@ -25,6 +25,12 @@ const mutations = {
   },
   'USERAGENT' (state, res) {
     state.userAgent = res
+  },
+  'MESSAGE' (state, res) {
+    state.chartMessage = res
+  },
+  'MESSAGENUM' (state, res) {
+    state.messageNum = res
   }
 
 }

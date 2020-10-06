@@ -14,12 +14,12 @@
           <van-image width="40"
                      height="40"
                      round
-                     :src="ishttp(user.member.head_portrait,true)"/>
-          {{user.member.nickname}}
+                     :src="user.member&&ishttp(user.member.head_portrait,true)"/>
+          {{user.member&&user.member.nickname}}
         </div>
         <div v-if="title"><span>第{{title}}名</span></div>
         <div>
-          <p>{{list.mine.money}}元</p>
+          <p>{{list.mine&&list.mine.money}}元</p>
         </div>
       </div>
       <div v-for="(item,k) in list.ranks" :key="k">
@@ -30,11 +30,11 @@
           <van-image width="40"
                      height="40"
                      round
-                     :src="ishttp(item.member.head_portrait,true)"/>
-          {{item.member.nickname}}
+                     :src="user.member&&ishttp(item.member.head_portrait,true)"/>
+          {{user.member&&item.member.nickname}}
         </div>
         <div>
-          <p :name="user.member.id===parseInt(item.member.id)&&(title=k)">{{item.accumulate_money}}元</p>
+          <p v-if="user.member" :name="user.member.id===parseInt(item.member.id)&&(title=k)">{{item.accumulate_money}}元</p>
         </div>
       </div>
     </div>

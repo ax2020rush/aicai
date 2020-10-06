@@ -11,6 +11,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'index',
   methods: {
@@ -18,7 +19,7 @@ export default {
       sessionStorage.clear()
       localStorage.clear()
       setTimeout(() => {
-        this.$router.push({ path: '/login' })
+        location.reload()
       }, 1000)
     }
   }

@@ -71,7 +71,7 @@ export default {
   },
   methods: {
     href () {
-      window.open('https://cai1w.com/21/#/')
+      window.open(this.$store.state.config.data.customer_service_link)
     },
     ...mapActions(['getuser']),
     async onsubmit () {
