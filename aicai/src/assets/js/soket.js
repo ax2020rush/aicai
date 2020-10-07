@@ -1,6 +1,5 @@
 import api from 'assets/js/api'
 import store from '../../store/index'
-import { getlocal } from 'assets/js/MD5'
 
 var cl = true
 var sta = true
@@ -32,7 +31,7 @@ export const soket = async (callback) => {
     const data = JSON.parse(e.data)
     store.dispatch('getMessage', data)
     if (time) {
-      localStorage.setItem('time', Math.round(getlocal(8).getTime() / 1000))
+      localStorage.setItem('time', Math.round(new Date().getTime() / 1000))
     }
     if (data.type === 'message') {
       const obj = store.state.messageNum

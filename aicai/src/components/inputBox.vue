@@ -147,7 +147,7 @@ export default {
     padding-bottom: 18px;
     border-bottom: 1px solid #d3d3d3;
     input{
-      width: 100%;
+      width: calc(100%-100px);
       opacity: 0;
       @include tp32;
       color: $cl1;

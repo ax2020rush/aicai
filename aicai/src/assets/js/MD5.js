@@ -7,17 +7,16 @@ const qs = require('qs')
 
 export const getlocal = (i) => {
   // 参数i为时区值数字，比如北京为东八区则输进8,西5输入-5
-  if (typeof i !== 'number') return
-  var d = new Date()
-  // 得到1970年一月一日到现在的秒数
-  var len = d.getTime()
-  // 本地时间与GMT时间的时间偏移差
-  var offset = d.getTimezoneOffset() * 60000
-  // 得到现在的格林尼治时间
-  var utcTime = len + offset
-  return new Date(utcTime + 3600000 * i)
-}
+  var zoneOffset = i
+  // 算出时差,并转换为毫秒：
+  var offset2 = new Date().getTimezoneOffset() * 60 * 1000
+  // 算出现在的时间：
+  var nowDate2 = new Date().getTime()
+  // 此时东8区的时间
+  // var currentZoneDate = new Date(nowDate2 + offset2 + zoneOffset * 60 * 60 * 1000)
 
+  return Math.round((nowDate2 + offset2 + zoneOffset * 60 * 60) / 1000).toString()
+}
 export const Md5Keys = (key) => {
   const str = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
   let newStr = ''// 生成8位随机字符串
@@ -27,7 +26,7 @@ export const Md5Keys = (key) => {
   const obj = {
     ...key,
     appId: 'ycmc',
-    time: Math.round(getlocal(8).getTime() / 1000).toString(),
+    time: Math.round(new Date().getTime() / 1000).toString(),
     nonceStr: newStr
   }
   const newObj = {}

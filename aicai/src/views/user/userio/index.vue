@@ -121,6 +121,7 @@ export default {
   flex-wrap: wrap;
   align-items: center;
   margin-top: 10%;
+
   .box{
     width: 100%;
   }
